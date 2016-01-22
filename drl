@@ -1,21 +1,15 @@
-rule "Calculate Maximum Deductible for Nebraska"
+rule "Calculate Maximum Value"
 	no-loop
-	ruleflow-group "Starr_WC_MaximumDeductible"
+	ruleflow-group "Max Value"
     when   
-    	
-		not MapEntry(keyAsString == 'IsMaximumDeductiblePicked');
-    	map : QuestionHashMap(map.getString('Object::Location::StateRegionCode')=='NE', map.getValueAsDouble('Object::Quote::Location::StandardPremium') != 0 , map.getValueAsDouble('Object::Quote::Location::Deductible') != 0);
+    	map : HashMap(map.getString('FirstValue')!='', map.getString('SecondValue') != '');
     			
     then
-    	double maxDeductibleLimit = 10000000;
-    	String state = map.getString('Object::Location::StateRegionCode');
-		double stdPremium = map.getValueAsDouble('Object::Quote::Location::StandardPremium');
-		double deductible = map.getValueAsDouble('Object::Quote::Location::Deductible');
-        double maxDeductible = (40 * stdPremium )/100 ;
-        if(deductible>maxDeductibleLimit)
-        {
-        maxDeductible = maxDeductibleLimit;
-        }
-		map.put('Object::Quote::Location::MaximumDeductible',maxDeductible);
-		insert(new MapEntry('IsMaximumDeductiblePicked','Y'));
+    	int first = Integer.parseInt(map.get('FirstValue'));
+    	int second = Integer.parseInt(map.get('secondvalue'));
+    	int max ;
+    	if(first>second)
+    	max = first;
+    	else
+    	max = second;
 end
