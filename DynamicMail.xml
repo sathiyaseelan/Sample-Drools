@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/util"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
+	
+	<bean id="initMethod" class="com.URLRegistrySingleton" init-method="init"/>
+	<bean id="AggregateMails" class="com.aggregator.AggregateMails" />
+	<camelContext xmlns="http://camel.apache.org/schema/spring">
+	<route>
+		 <from uri="activemq:EmailStart" /> 
+		 <to uri="rest:Email?version=2.0" />
+		<aggregate strategyRef="AggregateMails"	ignoreInvalidCorrelationKeys="true" >
+		<correlationExpression>
+			<header>NotificationID</header>					
+		</correlationExpression>		
+		 <completionSize>
+		  <header>RecipientListSize</header>
+		 <!-- <constant>2</constant> -->
+ 		  </completionSize>
+	<to uri="activemq:EmailEnd" />
+		</aggregate>  
+	</route>
+</camelContext>
+</beans>
