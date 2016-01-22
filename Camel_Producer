@@ -1,0 +1,33 @@
+public class Old_Producer {
+
+	private static String url = "tcp://192.168.*.***:****";
+	
+	//private static String url = "discovery:(multicast://default)?initialReconnectDelay=100";
+	//private static String url = "discovery:(multicast://default?group=SolartisBus)";
+
+	private static String queue = "mail_start";
+
+	public static void main(String[] args){
+		try{
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection connection = connectionFactory.createConnection();
+		connection.start();
+		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		Destination destination = session.createQueue(queue);
+		
+		MessageProducer producer = session.createProducer(destination);
+		for(int i =1;i<=1;i++){
+			TextMessage text= session.createTextMessage("Hi mails");
+			producer.send(text);
+		}
+		System.out.println("Completed");
+		session.close();
+		connection.close();
+		
+		}
+		catch(JMSException exception){
+			System.out.println("Exception in ActiveMQ"+exception.getMessage());
+		}
+	}
+
+}
