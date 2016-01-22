@@ -1,0 +1,7 @@
+To Create a common bus
+
+<networkConnectors>
+ 		<!-- <networkConnector uri="static:(tcp://192.168.5.249:61616,tcp://192.168.5.52:61616)"/> -->
+		 <!--<networkConnector uri="multicast://default"/>-->
+		<networkConnector uri="multicast://default?group=Bus"/>
+	 </networkConnectors>
