@@ -1,0 +1,9 @@
+Salience is for executing Priority rules
+No-loop is set so that, the Rule is not reactivated again
+
+In Decision table - coulmns:
+  1.Rule Flow Group
+  2.NO-LOOP
+  3.Priority
+  4.Condition(any number of condition)
+  5.Action
