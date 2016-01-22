@@ -96,7 +96,7 @@
 	</build>
 	<profiles>
 		<profile>
-			<id>SOLARTIS_DEV</id>
+			<id>*******</id>
 			<build>
 				<plugins>
 					<plugin>
